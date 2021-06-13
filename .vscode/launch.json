@@ -5,11 +5,26 @@
   "version": "0.2.0",
   "configurations": [
     {
+      // server side debug
       "type": "node",
       "request": "attach",
-      "name": "next.js debug",
+      "name": "Next.js: Server",
       "skipFiles": ["<node_internals>/**"],
       "port": 9229
+    },
+    {
+      // client side debug
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Next.js: Client",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "full stack debug",
+      "configurations": ["Next.js: Server", "Next.js: Client"]
     }
   ]
 }

@@ -13,7 +13,7 @@ export default function Home() {
   const { data } = useSWR<dataType>(address);
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setAddress('/api/hello?id=' + e.currentTarget.value);
+    setAddress('/api/hello/' + e.currentTarget.value);
   };
 
   return (

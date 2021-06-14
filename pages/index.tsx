@@ -1,49 +1,18 @@
 import Layout from '../components/layout';
 import useSWR from 'swr';
 
-type DataType = {
-  message: string;
-  data: {
-    name: string;
-    mail: string;
-    age: number;
-  }[];
-};
-
 export default function Home() {
-  const { data } = useSWR<DataType>('/data.json');
+  const func = (arg: string) => fetch(arg).then((res) => res.text());
+  const { data, error } = useSWR<string, Error>('/data.txt', func, {
+    refreshInterval: 5000,
+  });
 
   return (
     <div>
+      {error}
       <Layout header="Next.js" title="Top page.">
         <div className="alert alert-primary text-center">
-          <h5 className="mb-4">{data !== undefined ? data.message : 'error...'}</h5>
-          <table className="table table-dark">
-            <thead className="">
-              <tr>
-                <th>Name</th>
-                <th>Mail</th>
-                <th>Age</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data !== undefined ? (
-                data.data.map((value, key) => (
-                  <tr key={key}>
-                    <th>{value.name}</th>
-                    <td>{value.mail}</td>
-                    <td>{value.age}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <th></th>
-                  <td>no data.</td>
-                  <td></td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+          <h5 className="mb-4">{data}</h5>
         </div>
       </Layout>
     </div>
